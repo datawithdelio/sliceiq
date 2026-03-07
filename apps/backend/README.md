@@ -29,6 +29,29 @@ psql "$DATABASE_URL" -f migrations/schema.sql
 3. Set `DATABASE_URL` to that connection string (ensure `sslmode=require`).
 4. Use the `psql` command above to apply `migrations/schema.sql`.
 
+## Connect to Upstash Redis
+
+1. Copy your Upstash Redis URL from the Upstash dashboard.
+2. Set `UPSTASH_REDIS_URL` in your `.env` (repo root).
+
+Example:
+
+```bash
+UPSTASH_REDIS_URL="rediss://default:YOUR_PASSWORD@YOUR_HOST:YOUR_PORT"
+```
+
+3. Restart the API container so env changes are applied:
+
+```bash
+docker compose up -d --build api
+```
+
+4. Verify Redis integration:
+
+```bash
+curl http://localhost:8000/ping-redis
+```
+
 ## Alembic Migrations
 
 Alembic is configured in:

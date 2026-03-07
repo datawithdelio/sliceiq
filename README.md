@@ -98,6 +98,27 @@ Expected response:
 {"status":"ok","service":"sliceiq-api"}
 ```
 
+### 5. Upstash Redis (optional cloud Redis)
+
+1. Copy your Upstash Redis URL (format: `rediss://default:<password>@<host>:<port>`).
+2. Set it in `.env`:
+
+```bash
+UPSTASH_REDIS_URL=rediss://default:YOUR_PASSWORD@YOUR_HOST:YOUR_PORT
+```
+
+3. Rebuild and restart API:
+
+```bash
+docker compose up -d --build api
+```
+
+4. Verify Redis connectivity:
+
+```bash
+curl http://localhost:8000/ping-redis
+```
+
 ## CI Pipeline
 
 GitHub Actions runs on pushes and pull requests to `main`:
