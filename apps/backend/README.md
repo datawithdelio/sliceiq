@@ -65,3 +65,34 @@ Required env vars for JWT verification:
 
 If you set `CLERK_ISSUER`, JWKS defaults to:
 - `{CLERK_ISSUER}/.well-known/jwks.json`
+
+## Synthetic Data Simulator (Day 5 ML)
+
+Script path:
+- `scripts/seed_data.py`
+
+What it generates:
+- 200 synthetic users (`@synthetic.sliceiq.local`)
+- 6-month order history with:
+  - lunch/dinner rush-hour weighting (12-2pm, 6-9pm)
+  - weekday-heavy behavior
+  - ~30% power/repeat users
+- 1-5 order items per order from existing products
+
+Idempotency:
+- Synthetic users are created only up to 200.
+- Existing synthetic users' orders/order_items are replaced on each run (no duplicates).
+
+Run locally:
+
+```bash
+cd apps/backend
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python scripts/seed_data.py
+```
+
+The script prints:
+- `Seeded X users, Y orders, Z order_items`
+- `Behavior Report: rush_hour_pct=..., weekday_pct=..., weekend_pct=..., repeat_user_pct=..., power_user_pct=...`

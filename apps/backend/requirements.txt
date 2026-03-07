@@ -12,3 +12,4 @@ stripe
 httpx
 pytest
 pyjwt[crypto]
+Faker
