@@ -1,3 +1,6 @@
+import { Show, SignInButton, UserButton } from "@clerk/nextjs";
+import { AuthDebug } from "./components/auth-debug";
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-white text-zinc-900">
@@ -36,11 +39,20 @@ export default function Home() {
           </div>
         </section>
 
-        <div>
-          <button className="rounded-full bg-zinc-900 px-6 py-3 text-sm font-semibold text-white">
-            Get Started
-          </button>
+        <div className="flex items-center gap-4">
+          <Show when="signed-out">
+            <SignInButton mode="modal">
+              <button className="rounded-full bg-zinc-900 px-6 py-3 text-sm font-semibold text-white">
+                Sign In
+              </button>
+            </SignInButton>
+          </Show>
+          <Show when="signed-in">
+            <UserButton />
+          </Show>
         </div>
+
+        <AuthDebug />
       </main>
     </div>
   );

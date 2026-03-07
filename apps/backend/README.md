@@ -50,3 +50,18 @@ Create a new migration:
 ```bash
 docker compose run --rm api alembic -c alembic.ini revision -m "describe change"
 ```
+
+## Clerk JWT Protection
+
+Protected routes are mounted under:
+- `/protected/*`
+
+Current test endpoint:
+- `GET /protected/me`
+
+Required env vars for JWT verification:
+- `CLERK_ISSUER` (recommended) or `CLERK_JWKS_URL`
+- `CLERK_AUDIENCE` (optional)
+
+If you set `CLERK_ISSUER`, JWKS defaults to:
+- `{CLERK_ISSUER}/.well-known/jwks.json`

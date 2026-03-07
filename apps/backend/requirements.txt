@@ -9,3 +9,4 @@ python-dotenv
 stripe
 httpx
 pytest
+pyjwt[crypto]
