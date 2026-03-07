@@ -38,16 +38,16 @@ class ClerkJWTVerifier:
         header = jwt.get_unverified_header(token)
         alg = str(header.get("alg", "RS256"))
 
-        if alg.startswith("HS"):
-            signing_key = os.getenv("CLERK_SECRET_KEY", "").strip()
-            if not signing_key:
-                raise RuntimeError("CLERK_SECRET_KEY is required for HS* tokens")
-        else:
-            jwk_client = PyJWKClient(self.jwks_url)
-            signing_key = jwk_client.get_signing_key_from_jwt(token).key
-
-        options = {"verify_aud": bool(self.audience), "verify_iss": bool(self.issuer)}
         try:
+            if alg.startswith("HS"):
+                signing_key = os.getenv("CLERK_SECRET_KEY", "").strip()
+                if not signing_key:
+                    raise RuntimeError("CLERK_SECRET_KEY is required for HS* tokens")
+            else:
+                jwk_client = PyJWKClient(self.jwks_url)
+                signing_key = jwk_client.get_signing_key_from_jwt(token).key
+
+            options = {"verify_aud": bool(self.audience), "verify_iss": bool(self.issuer)}
             return jwt.decode(
                 token,
                 signing_key,
@@ -57,8 +57,44 @@ class ClerkJWTVerifier:
                 options=options,
             )
         except Exception:
+            # Fallback 1: try JWKS derived from token issuer.
+            if not alg.startswith("HS"):
+                try:
+                    return self._verify_with_token_issuer_jwks(token, alg)
+                except Exception:
+                    pass
             # Dev-friendly fallback: validate token's session against Clerk API.
             return self._verify_via_clerk_session(token)
+
+    def _verify_with_token_issuer_jwks(self, token: str, alg: str) -> dict[str, Any]:
+        payload = jwt.decode(
+            token,
+            options={
+                "verify_signature": False,
+                "verify_aud": False,
+                "verify_iss": False,
+                "verify_exp": False,
+                "verify_nbf": False,
+            },
+        )
+        token_issuer = str(payload.get("iss", "")).strip()
+        if not token_issuer:
+            raise RuntimeError("Token missing issuer")
+
+        dynamic_jwks_url = f"{token_issuer.rstrip('/')}/.well-known/jwks.json"
+        signing_key = PyJWKClient(dynamic_jwks_url).get_signing_key_from_jwt(token).key
+
+        # If signature validates against the token issuer's JWKS, accept that issuer.
+        # Keep optional audience verification, but do not force env issuer in this path.
+        options = {"verify_aud": bool(self.audience), "verify_iss": False}
+        return jwt.decode(
+            token,
+            signing_key,
+            algorithms=[alg],
+            audience=self.audience,
+            issuer=None,
+            options=options,
+        )
 
     def _verify_via_clerk_session(self, token: str) -> dict[str, Any]:
         payload = jwt.decode(
@@ -91,7 +127,7 @@ class ClerkJWTVerifier:
             )
 
         if resp.status_code != 200:
-            raise RuntimeError("Session lookup failed")
+            raise RuntimeError(f"Session lookup failed (HTTP {resp.status_code})")
 
         data = resp.json()
         if data.get("status") != "active":

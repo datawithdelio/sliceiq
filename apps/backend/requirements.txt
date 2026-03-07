@@ -2,8 +2,10 @@ fastapi
 uvicorn
 sqlalchemy
 asyncpg
+psycopg2-binary
 alembic
 pydantic
+email-validator
 pydantic-settings
 python-dotenv
 stripe
