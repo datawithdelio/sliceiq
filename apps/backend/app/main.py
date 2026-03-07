@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import app.models  # noqa: F401
 from app.api.protected import router as protected_router
 from app.api.health import router as health_router
+from app.api.redis_ping import router as redis_ping_router
 from app.routers.products import router as products_router
 
 app = FastAPI(title="SliceIQ API")
@@ -22,6 +23,7 @@ app.add_middleware(
 )
 
 app.include_router(health_router)
+app.include_router(redis_ping_router)
 app.include_router(protected_router)
 app.include_router(products_router)
 

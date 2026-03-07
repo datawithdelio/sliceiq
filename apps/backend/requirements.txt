@@ -13,3 +13,4 @@ httpx
 pytest
 pyjwt[crypto]
 Faker
+redis

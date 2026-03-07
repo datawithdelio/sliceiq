@@ -3,10 +3,16 @@ services:
     build:
       context: ./apps/backend
       dockerfile: Dockerfile
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     ports:
       - "8000:8000"
     env_file:
       - .env
+    volumes:
+      - ./apps/backend/app:/app/app
+      - ./apps/backend/alembic:/app/alembic
+      - ./apps/backend/migrations:/app/migrations
+      - ./apps/backend/alembic.ini:/app/alembic.ini
     depends_on:
       - db
       - redis
@@ -29,7 +35,7 @@ services:
       - sliceiq-network
 
   redis:
-    image: redis:7
+    image: redis:7-alpine
     ports:
       - "6379:6379"
     env_file:
