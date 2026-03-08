@@ -42,6 +42,15 @@ async def client():
         yield ac
 
 
+@pytest.fixture()
+def db_session():
+    db = TestingSessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
 @pytest.fixture(scope="function", autouse=True)
 async def setup_db():
     Base.metadata.drop_all(bind=engine)

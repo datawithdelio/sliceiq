@@ -1,7 +1,7 @@
 from app.models.order import Order
 from app.models.order_item import OrderItem
 from app.models.product import Product
+from app.models.promo import Promo
 from app.models.user import User
 
-__all__ = ["User", "Product", "Order", "OrderItem"]
-
+__all__ = ["User", "Product", "Order", "OrderItem", "Promo"]

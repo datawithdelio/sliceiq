@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from uuid import UUID
+
 from fastapi import APIRouter, Depends, Query
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
@@ -31,7 +33,7 @@ def get_products(
     summary="Get product by ID",
     responses={404: {"description": "Product not found"}},
 )
-def get_product(product_id: int, db: Session = Depends(get_db)) -> Product:
+def get_product(product_id: UUID, db: Session = Depends(get_db)) -> Product:
     product = db.query(Product).filter(Product.id == product_id).first()
     if product is None:
         raise HTTPException(status_code=404, detail="Product not found")
@@ -66,7 +68,7 @@ def create_product(payload: ProductCreate, db: Session = Depends(get_db)) -> Pro
     responses={404: {"description": "Product not found"}},
 )
 def update_product(
-    product_id: int,
+    product_id: UUID,
     payload: ProductUpdate,
     db: Session = Depends(get_db),
 ) -> Product:
@@ -89,7 +91,7 @@ def update_product(
     summary="Delete product",
     responses={404: {"description": "Product not found"}},
 )
-def delete_product(product_id: int, db: Session = Depends(get_db)) -> None:
+def delete_product(product_id: UUID, db: Session = Depends(get_db)) -> None:
     product = db.query(Product).filter(Product.id == product_id).first()
     if product is None:
         raise HTTPException(status_code=404, detail="Product not found")
