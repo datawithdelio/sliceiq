@@ -9,8 +9,10 @@ email-validator
 pydantic-settings
 python-dotenv
 stripe
-httpx
-pytest
+httpx==0.25.1
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
 pyjwt[crypto]
 Faker
 redis
