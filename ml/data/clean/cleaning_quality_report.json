@@ -1,0 +1,11 @@
+{
+  "saved_at_utc": "2026-03-11T00:44:00.966696+00:00",
+  "amount_column": "total_price",
+  "row_counts": {
+    "users_clean": 200,
+    "orders_clean": 1053,
+    "order_items_clean": 3122,
+    "reviews_clean": 0,
+    "products_clean": 6
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "generated_at_utc": "2026-03-11T05:03:07.689033+00:00",
+  "model_version": "v20260311045627",
+  "scored_users": 200,
+  "psi": 0.43378050970797377,
+  "js_divergence": 0.019946626127539176,
+  "current_mean_score": 0.3364410434705427,
+  "current_std_score": 0.39196752032123844,
+  "baseline_mean_score": 0.4333438201120799,
+  "baseline_std_score": 0.4135180354565073,
+  "recommended_threshold": 0.312470840610089,
+  "risk_mix": {
+    "high": 0.695,
+    "medium": 0.005,
+    "low": 0.3
+  },
+  "baseline_risk_mix_estimate": {
+    "high": 0.5681159420289855,
+    "low": 0.408695652173913
+  },
+  "near_threshold_rate": 0.02,
+  "predicted_positive_rate_live": 0.3,
+  "predicted_positive_rate_test": 0.4318840579710145,
+  "predicted_positive_rate_delta": -0.1318840579710145,
+  "alerts": {
+    "psi_alert": false,
+    "psi_warn": false,
+    "high_risk_alert": false,
+    "high_risk_warn": false,
+    "low_risk_collapse_alert": false,
+    "predicted_positive_shift_alert": false,
+    "missing_score_data_alert": false
+  },
+  "thresholds": {
+    "psi_alert_threshold": 0.4,
+    "psi_warn_threshold": 0.25,
+    "js_alert_threshold": 0.03,
+    "js_warn_threshold": 0.02,
+    "max_high_risk_rate": 0.8181159420289855,
+    "warn_high_risk_rate": 0.7181159420289855,
+    "min_low_risk_rate": 0.10217391304347825,
+    "max_pred_positive_delta": 0.15
+  }
+}

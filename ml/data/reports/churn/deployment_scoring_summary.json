@@ -1,0 +1,77 @@
+{
+  "generated_at_utc": "2026-03-11T04:56:56.768627+00:00",
+  "model_name": "sliceiq_reorder_propensity",
+  "model_version": "v20260311045627",
+  "best_model_family": "extra_trees",
+  "snapshot_ts": "2026-03-11T04:56:56+00:00",
+  "database_host": "localhost",
+  "scored_users": 200,
+  "selected_features": [
+    "recency_gap_ratio",
+    "revenue_lookback_lag1",
+    "cohort_revenue_index",
+    "revenue_lookback_zscore_snapshot",
+    "log1p_std_order_value_lookback",
+    "orders_60d",
+    "log1p_revenue_lookback",
+    "std_order_value_lookback_clip",
+    "std_order_value_lookback",
+    "orders_30d_per_age",
+    "orders_lookback",
+    "log1p_avg_gap_days_lookback",
+    "log1p_gap_multiplier",
+    "value_gap_ratio",
+    "revenue_lookback",
+    "orders_30d_zscore_snapshot",
+    "max_gap_days_lookback",
+    "revenue_per_order_lifetime",
+    "orders_30d_roll3_mean_lagged",
+    "std_gap_days_lookback",
+    "orders_30d",
+    "orders_30d_lag1",
+    "avg_gap_days_lookback",
+    "days_since_last_order_vs_roll3"
+  ],
+  "missing_selected_features": [],
+  "risk_mix": {
+    "high": 0.695,
+    "medium": 0.005,
+    "low": 0.3
+  },
+  "threshold_band_mix": {
+    "below_threshold": 0.68,
+    "above_threshold": 0.3,
+    "near_threshold": 0.02
+  },
+  "monitor": {
+    "generated_at_utc": "2026-03-11T04:56:56.768575+00:00",
+    "model_version": "v20260311045627",
+    "scored_users": 200,
+    "psi": 0.43378050970797377,
+    "current_mean_score": 0.3364410434705428,
+    "baseline_mean_score": 0.4333438201120799,
+    "high_risk_rate": 0.695,
+    "medium_risk_rate": 0.005,
+    "low_risk_rate": 0.3,
+    "alerts": {
+      "psi_alert": true,
+      "high_risk_alert": true
+    },
+    "thresholds": {
+      "recommended_threshold": 0.312470840610089,
+      "psi_alert_threshold": 0.25,
+      "max_high_risk_rate": 0.45
+    }
+  },
+  "cohort_time_series_context": {
+    "cohorts": 7,
+    "max_period": 6,
+    "daily_anomalies": 6
+  },
+  "causal_release_context": {
+    "final_decision": "ship",
+    "reason_codes": [
+      "ALL_CHECKS_PASS"
+    ]
+  }
+}

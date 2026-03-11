@@ -1,0 +1,301 @@
+{
+  "generated_at_utc": "2026-03-11T05:14:51.100362+00:00",
+  "summary": {
+    "pass": 26,
+    "warn": 0,
+    "fail": 0
+  },
+  "by_chapter": {
+    "ch3": {
+      "pass": 3
+    },
+    "ch4": {
+      "pass": 2
+    },
+    "ch5": {
+      "pass": 2
+    },
+    "ch7": {
+      "pass": 14
+    },
+    "ch8": {
+      "pass": 5
+    }
+  },
+  "rows": [
+    {
+      "domain": "causal_ab",
+      "chapter": "ch7",
+      "check": "ab_binary_effect_quality",
+      "status": "pass",
+      "value": {
+        "p_value": 9.857681621527965e-12,
+        "rate_diff": 0.13666666666666666,
+        "practical_ok": true
+      },
+      "threshold": "p<0.05 and lift>=0.005",
+      "evidence": "ab_test_results.json :: binary_results",
+      "why_it_matters": "Statistical and practical lift should both pass before broad rollout."
+    },
+    {
+      "domain": "causal_ab",
+      "chapter": "ch7",
+      "check": "ab_binary_ready",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "ab_test_results.json :: readiness.ab_binary_ready",
+      "why_it_matters": "Binary conversion inference must meet minimum data support."
+    },
+    {
+      "domain": "causal_ab",
+      "chapter": "ch7",
+      "check": "ab_continuous_ready",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "ab_test_results.json :: readiness.ab_continuous_ready",
+      "why_it_matters": "Continuous-metric inference requires adequate per-variant support."
+    },
+    {
+      "domain": "causal_ab",
+      "chapter": "ch7",
+      "check": "ab_covariate_balance_smd",
+      "status": "pass",
+      "value": 0.03102386096898505,
+      "threshold": "<= 0.10 (warn <= 0.20)",
+      "evidence": "ab_test_results.json :: covariate_balance_smd",
+      "why_it_matters": "Large imbalance can bias treatment effect estimates."
+    },
+    {
+      "domain": "causal_ab",
+      "chapter": "ch7",
+      "check": "ab_cuped_effect_quality",
+      "status": "pass",
+      "value": {
+        "p_value": 1.4718815382231834e-14,
+        "difference": 24.334055040235526,
+        "variance_reduction": 0.016433091395768318
+      },
+      "threshold": "p<0.05 and difference>=0.0",
+      "evidence": "ab_test_results.json :: cuped_results",
+      "why_it_matters": "CUPED-adjusted effects improve precision for rollout confidence."
+    },
+    {
+      "domain": "causal_ab",
+      "chapter": "ch7",
+      "check": "ab_heterogeneity_coverage",
+      "status": "pass",
+      "value": {
+        "binary_bands": 3,
+        "continuous_bands": 3
+      },
+      "threshold": ">= 2 risk bands per metric",
+      "evidence": "ab_test_results.json :: risk_band tests",
+      "why_it_matters": "Consistent uplift across segments supports stable production targeting."
+    },
+    {
+      "domain": "causal_ab",
+      "chapter": "ch7",
+      "check": "ab_heterogeneity_ready",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "ab_test_results.json :: readiness.ab_heterogeneity_ready",
+      "why_it_matters": "Segment-level heterogeneity is required for targeted rollout policy."
+    },
+    {
+      "domain": "causal_ab",
+      "chapter": "ch7",
+      "check": "ab_multiple_testing_control",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "ab_test_results.json :: risk_band_*_tests with q_value_bh",
+      "why_it_matters": "Chapter 7 recommends explicit control for segmented testing multiplicity."
+    },
+    {
+      "domain": "causal_ab",
+      "chapter": "ch7",
+      "check": "ab_srm_guardrail",
+      "status": "pass",
+      "value": false,
+      "threshold": "False",
+      "evidence": "ab_test_results.json :: srm.flag",
+      "why_it_matters": "SRM failures undermine randomization validity."
+    },
+    {
+      "domain": "causal_did",
+      "chapter": "ch3",
+      "check": "did_pre_post_period_integrity",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "did_results.json :: manual pre/post cells",
+      "why_it_matters": "Chapter 3 time comparisons require complete and consistent period definitions."
+    },
+    {
+      "domain": "causal_did",
+      "chapter": "ch7",
+      "check": "did_parallel_trends_guardrail",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "causal_release_decision.json :: checks.pretrend_ok",
+      "why_it_matters": "Parallel trends is central to DiD identification validity."
+    },
+    {
+      "domain": "causal_did",
+      "chapter": "ch7",
+      "check": "did_placebo_guardrail",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "causal_release_decision.json :: checks.placebo_ok",
+      "why_it_matters": "Placebo checks reduce risk of spurious treatment effects."
+    },
+    {
+      "domain": "causal_did",
+      "chapter": "ch7",
+      "check": "did_primary_effect_practical",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "causal_release_decision.json :: checks.did_practical_ok",
+      "why_it_matters": "Practical effect size determines whether rollout impact is meaningful."
+    },
+    {
+      "domain": "causal_did",
+      "chapter": "ch7",
+      "check": "did_primary_effect_significance",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "causal_release_decision.json :: checks.did_stat_ok",
+      "why_it_matters": "Significance is a minimum requirement for causal rollout confidence."
+    },
+    {
+      "domain": "causal_did",
+      "chapter": "ch7",
+      "check": "did_ready_for_regression",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "did_results.json :: readiness.did_ready_for_regression",
+      "why_it_matters": "Regression DiD should only run when support and cells are sufficient."
+    },
+    {
+      "domain": "context",
+      "chapter": "ch3",
+      "check": "cohort_period_depth",
+      "status": "pass",
+      "value": 6,
+      "threshold": ">= 4 periods",
+      "evidence": "cohort_time_series_summary.json :: max_period",
+      "why_it_matters": "Adequate period depth supports stable time-based interpretation."
+    },
+    {
+      "domain": "context",
+      "chapter": "ch3",
+      "check": "daily_anomaly_pressure",
+      "status": "pass",
+      "value": 6,
+      "threshold": "<= 12 (warn <= 20)",
+      "evidence": "cohort_time_series_summary.json :: daily_anomalies",
+      "why_it_matters": "High anomaly pressure can invalidate near-term rollout assumptions."
+    },
+    {
+      "domain": "context",
+      "chapter": "ch4",
+      "check": "cohort_coverage",
+      "status": "pass",
+      "value": 7,
+      "threshold": ">= 3 cohorts",
+      "evidence": "cohort_time_series_summary.json :: cohorts",
+      "why_it_matters": "Cohort breadth improves external validity of observed treatment behavior."
+    },
+    {
+      "domain": "context",
+      "chapter": "ch4",
+      "check": "fixed_window_fairness_coverage",
+      "status": "pass",
+      "value": 0.6666666666666666,
+      "threshold": ">= 0.40 cohorts with mature 90d window",
+      "evidence": "cohort_fixed_window_metrics.csv",
+      "why_it_matters": "Chapter 4 fairness requires fixed windows to avoid exposure bias."
+    },
+    {
+      "domain": "cross_notebook",
+      "chapter": "ch8",
+      "check": "ab_to_live_population_shift_high_band",
+      "status": "pass",
+      "value": 0.36166666666666664,
+      "threshold": "<= 0.40 (warn <= 0.55)",
+      "evidence": "ab_high_share=0.3333333333333333, live_high_share=0.695",
+      "why_it_matters": "Chapter 8 emphasizes production datasets may differ from experiment cohorts."
+    },
+    {
+      "domain": "cross_notebook",
+      "chapter": "ch8",
+      "check": "deployment_sample_size",
+      "status": "pass",
+      "value": 200,
+      "threshold": ">= 100",
+      "evidence": "deployment_scoring_summary.json :: scored_users",
+      "why_it_matters": "Tiny live populations reduce confidence in rollout generalization."
+    },
+    {
+      "domain": "cross_notebook",
+      "chapter": "ch8",
+      "check": "model_production_gate_status",
+      "status": "pass",
+      "value": "ship",
+      "threshold": "ship",
+      "evidence": "release_preflight_report.json :: final_decision",
+      "why_it_matters": "Causal rollout should align with model-system readiness state."
+    },
+    {
+      "domain": "study_guide",
+      "chapter": "ch5",
+      "check": "text_proxy_signals_available",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "found=['avg_rating_lifetime', 'review_count_lifetime']",
+      "why_it_matters": "Chapter 5 encourages preserving normalized text-derived signal where available."
+    },
+    {
+      "domain": "study_guide",
+      "chapter": "ch5",
+      "check": "variant_label_normalization",
+      "status": "pass",
+      "value": {
+        "control": "control",
+        "treatment": "treatment"
+      },
+      "threshold": "distinct lower-case labels",
+      "evidence": "ab_test_results.json :: control_label/treatment_label",
+      "why_it_matters": "Text normalization avoids silent group-key fragmentation."
+    },
+    {
+      "domain": "study_guide",
+      "chapter": "ch8",
+      "check": "causal_output_pii_hygiene",
+      "status": "pass",
+      "value": 0,
+      "threshold": "0 pii-like keys",
+      "evidence": "pii_like_keys_sample=[]",
+      "why_it_matters": "Chapter 8 governance includes minimizing PII propagation in analytics artifacts."
+    },
+    {
+      "domain": "study_guide",
+      "chapter": "ch8",
+      "check": "governance_artifact_bundle",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "AB + DiD + model release + deployment summary",
+      "why_it_matters": "Chapter 8 favors reusable, audited data products over ad-hoc query outputs."
+    }
+  ]
+}

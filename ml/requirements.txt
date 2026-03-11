@@ -2,6 +2,7 @@ joblib
 matplotlib
 numpy
 pandas
+pyarrow
 psycopg2-binary
 python-dotenv
 scikit-learn

@@ -1,0 +1,45 @@
+domain,chapter,check,status,value,threshold,evidence,why_it_matters
+artifacts,,baseline_path_exists,pass,True,True,/Users/deliorincon/Desktop/Sliceiq/ml/models/churn_drift_baseline.json,Core release evidence must be materialized before gating.
+artifacts,,causal_decision_path_exists,pass,True,True,/Users/deliorincon/Desktop/Sliceiq/ml/data/reports/causal/causal_release_decision.json,Core release evidence must be materialized before gating.
+artifacts,,cohort_summary_path_exists,pass,True,True,/Users/deliorincon/Desktop/Sliceiq/ml/data/reports/causal/cohort_time_series/cohort_time_series_summary.json,Core release evidence must be materialized before gating.
+artifacts,,dataset_path_exists,pass,True,True,/Users/deliorincon/Desktop/Sliceiq/ml/data/churn_training_dataset.csv,Core release evidence must be materialized before gating.
+artifacts,,deploy_summary_path_exists,pass,True,True,/Users/deliorincon/Desktop/Sliceiq/ml/data/reports/churn/deployment_scoring_summary.json,Core release evidence must be materialized before gating.
+artifacts,,feature_dataset_path_exists,pass,True,True,/Users/deliorincon/Desktop/Sliceiq/ml/data/churn_training_features.csv,Core release evidence must be materialized before gating.
+artifacts,,metrics_path_exists,pass,True,True,/Users/deliorincon/Desktop/Sliceiq/ml/models/churn_reorder_metrics.json,Core release evidence must be materialized before gating.
+artifacts,,scoring_path_exists,pass,True,True,/Users/deliorincon/Desktop/Sliceiq/ml/data/churn_scoring_latest.csv,Core release evidence must be materialized before gating.
+causal_gate,ch7,ab_multiple_testing_control,pass,True,True,ml/data/reports/causal/ab_test/ab_test_results.json :: risk_band_binary_tests[*].q_value_bh,FDR control reduces false positives across segmented experiment reads.
+causal_gate,ch7,ab_sample_ratio_mismatch,pass,False,False,ml/data/reports/causal/ab_test/ab_test_results.json :: srm.flag,SRM failures invalidate randomization assumptions.
+causal_gate,ch7,causal_release_decision,pass,ship,ship,ml/data/reports/causal/causal_release_decision.json,Production launch should be consistent with causal release evidence.
+causal_gate,ch7,did_effect_significance,pass,True,True,ml/data/reports/causal/causal_release_decision.json :: checks.did_stat_ok,Significance guardrails prevent noise-driven decisioning.
+causal_gate,ch7,did_parallel_trends_guardrail,pass,True,True,ml/data/reports/causal/causal_release_decision.json :: checks.pretrend_ok,Parallel trends is a core identification assumption for DiD.
+causal_gate,ch7,did_placebo_guardrail,pass,True,True,ml/data/reports/causal/causal_release_decision.json :: checks.placebo_ok,A placebo fail suggests hidden confounding or timing artifacts.
+causal_gate,ch7,did_ready_for_regression,pass,True,True,ml/data/reports/causal/causal_release_decision.json :: checks.did_ready_for_regression,DiD checks should pass minimum data support before trusting effect estimates.
+cohort_ts,ch4,cohort_daily_anomalies,pass,6,<= 12 (warn <= 20),ml/data/reports/causal/cohort_time_series/cohort_time_series_summary.json,Anomaly pressure gives early warning for distributional instability.
+data_quality,,class_balance_gap_train_vs_test,pass,0.1596652378036334,<= 0.20 (warn <= 0.30),ml/models/churn_reorder_metrics.json :: class_balance,Large train/test prevalence shifts degrade operating-point stability.
+deployment,,deployment_missing_selected_features,pass,0,== 0,missing=[],Missing selected features in live scoring directly invalidates expected model behavior.
+deployment,,predicted_positive_rate_shift_vs_test,pass,0.1318840579710145,<= 0.15 (warn <= 0.25),"live=0.3, test=0.4318840579710145",Large operating-point shifts often precede business KPI regressions.
+deployment,,scored_users_minimum,pass,200,>= 100,deployment_scoring_summary.json :: scored_users,Very small scoring batches create unstable monitoring metrics.
+model_quality,,selected_features_count,pass,24,>= 12,ml/models/churn_reorder_metrics.json :: selected_features,"A sufficiently rich, stable feature set improves production robustness."
+model_quality,,selected_features_present_in_feature_dataset,pass,0,== 0 missing,missing=[],Training-selected features must be reproducible in production feature tables.
+model_quality,,test_brier,pass,0.02387510471226536,<= 0.20,ml/models/churn_reorder_metrics.json :: test_metrics.brier,Calibration drift often appears before rank-order performance degrades.
+model_quality,,test_pr_auc,pass,0.997593772184553,>= 0.40,ml/models/churn_reorder_metrics.json :: test_metrics.pr_auc,PR-AUC protects quality under class imbalance.
+model_quality,,test_roc_auc,pass,0.99804821257362,>= 0.60,ml/models/churn_reorder_metrics.json :: test_metrics.roc_auc,A weak classifier should never ship to production automation.
+model_quality,,threshold_range,pass,0.312470840610089,0 < threshold < 1,ml/models/churn_reorder_metrics.json :: threshold,Threshold sanity is required for downstream decision rules.
+study_guide,ch3,date_scaffold_continuity,pass,0,0 missing days,"expected_days=172, observed_days=172",Chapter 3 warns sparse timelines silently break rolling logic without scaffolding.
+study_guide,ch3,lag_rolling_zscore_features_present,pass,4,4 of 4,"found=['orders_30d_lag1', 'orders_30d_roll3_mean_lagged', 'orders_30d_zscore_snapshot', 'revenue_lookback_lag1']",Implements chapter 3 window-function style lag + rolling + anomaly framing.
+study_guide,ch3,rolling_window_count_integrity,pass,1.0,>= 0.90 mature rows with full 28-row context,"daily_timeseries rolling(28, min_periods=7) count diagnostics",Chapter 3 explicitly recommends window-size count validation to avoid off-by-one errors.
+study_guide,ch3,seasonality_features_present,pass,3,3 of 3,"found=['snapshot_month', 'snapshot_week_cos', 'snapshot_week_sin']",Seasonality controls reduce false signals in temporal comparisons.
+study_guide,ch4,cohort_artifacts_present,pass,True,True,cohort_retention_matrix.csv + cohort_fixed_window_metrics.csv,Chapter 4 requires cohort and fixed-window views for fair temporal comparisons.
+study_guide,ch4,cohort_period0_anchor_integrity,pass,True,True,cohort_retention_matrix.csv :: column '0' should be 1.0,Correct denominator propagation is the backbone of retention analysis.
+study_guide,ch4,fixed_window_fairness_metrics,pass,0.6666666666666666,>= 0.40 mature 90d cohorts (warn-only),cohort_fixed_window_metrics.csv,Returnship/cumulative fixed windows reduce cohort-age bias.
+study_guide,ch4,retention_values_within_bounds,pass,True,True,"All retention matrix values constrained to [0,1]",Invalid retention bounds indicate denominator or aggregation defects.
+study_guide,ch5,categorical_text_normalization,pass,True,True,scoring risk_bucket values lowercased,Chapter 5 emphasizes normalization to prevent silent category duplication.
+study_guide,ch5,text_artifact_or_proxy_signal,pass,True,True,"reviews_clean_exists=False, proxies=True",Chapter 5 signals can come from full text artifacts or stable text-adjacent proxy features.
+study_guide,ch5,text_proxy_features_present,pass,True,True,"found=['avg_rating_lifetime', 'review_count_lifetime']","Even without full NLP, text-adjacent proxies preserve sentiment/review signal."
+study_guide,ch6,anomaly_feature_pack,pass,True,True,"found=['is_gap_anomaly_2x', 'is_gap_anomaly_3x', 'revenue_lookback_zscore_snapshot']",Chapter 6 anomaly workflows need explicit anomaly flags in feature engineering.
+study_guide,ch6,daily_anomaly_report_exists,pass,True,True,/Users/deliorincon/Desktop/Sliceiq/ml/data/reports/causal/cohort_time_series/daily_order_anomalies.csv,An explicit anomaly report supports root-cause analysis before release decisions.
+study_guide,ch6,gap_anomaly_prevalence,pass,"{'is_gap_anomaly_2x': 0.5266821345707656, 'is_gap_anomaly_3x': 0.47447795823665895}",pass when 10%-70% for 2x flag and 3x flag <= 2x flag,feature_dataset gap anomaly flag prevalence,Anomaly flags should be informative but not degenerate.
+study_guide,ch6,outlier_impact_global_vs_subgroup,pass,8.251775555312836,warn only when ratio >= 2 and subgroup impact >= 5%,"global=0.002268014071322246, subgroup=0.01871514307284245",Chapter 6 stresses subgroup outlier impact can diverge from global impact.
+study_guide,ch8,dimensionality_reduction_flags,pass,True,True,"found=['is_gap_anomaly_2x', 'is_high_engagement', 'is_high_value']",Flags/buckets are chapter 8 core techniques for manageable production datasets.
+study_guide,ch8,governance_artifacts_present,pass,True,True,deployment summary + monitoring + causal decision,Chapter 8 emphasizes reusable audited datasets over ad-hoc query output.
+study_guide,ch8,scoring_output_pii_hygiene,pass,0,== 0 PII-like columns,pii_like_columns=[],Chapter 8 data governance includes minimizing PII exposure in shared outputs.

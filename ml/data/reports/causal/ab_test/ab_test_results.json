@@ -1,0 +1,170 @@
+{
+  "generated_at_utc": "2026-03-11T04:57:38.355204+00:00",
+  "control_label": "control",
+  "treatment_label": "treatment",
+  "risk_source": "model_score",
+  "sample_ratio_mismatch": 0.0,
+  "srm": {
+    "chi2": 0.0,
+    "p_value": 1.0,
+    "flag": false,
+    "alpha": 0.01
+  },
+  "readiness": {
+    "ab_binary_ready": true,
+    "ab_continuous_ready": true,
+    "ab_heterogeneity_ready": true,
+    "ab_binary_skip_reasons": [],
+    "ab_heterogeneity_skip_reasons": []
+  },
+  "covariate_balance_smd": [
+    {
+      "covariate": "pre_revenue_30d",
+      "smd_treat_minus_control": -0.024929311016576073
+    },
+    {
+      "covariate": "pre_orders",
+      "smd_treat_minus_control": -0.03102386096898505
+    },
+    {
+      "covariate": "risk_score",
+      "smd_treat_minus_control": 3.296358062524249e-05
+    }
+  ],
+  "binary_results": {
+    "control_rate": 0.3408333333333333,
+    "treatment_rate": 0.4775,
+    "rate_diff": 0.13666666666666666,
+    "rate_diff_ci_low": 0.0977065904416767,
+    "rate_diff_ci_high": 0.1756267428916566,
+    "relative_lift": 0.4009779951100245,
+    "z_stat": 6.808565339353245,
+    "p_value": 9.857681621527965e-12,
+    "practical_min_lift": 0.005,
+    "practical_ok": true,
+    "note": "computed",
+    "risk_interaction_coef": 0.5067491315740126,
+    "risk_interaction_p_value": 0.020587817981158253,
+    "risk_interaction_note": "computed"
+  },
+  "continuous_results": {
+    "metric": "revenue_analysis",
+    "metric_mode": "winsorized_0.01_0.99",
+    "difference": 24.585288333333338,
+    "difference_ci_low": 18.368619782131844,
+    "difference_ci_high": 30.80195688453483,
+    "cohen_d": 0.3166016351343911,
+    "welch_t": 7.755124578100732,
+    "welch_p_value": 1.303258091152131e-14,
+    "practical_min_lift": 0.0,
+    "practical_ok": true,
+    "note": "computed",
+    "risk_interaction_coef": -0.5394128027273184,
+    "risk_interaction_p_value": 0.9408465067120318,
+    "risk_interaction_note": "computed"
+  },
+  "cuped_results": {
+    "difference": 24.334055040235526,
+    "welch_t": 7.739348619169806,
+    "welch_p_value": 1.4718815382231834e-14,
+    "theta": -0.17185819761151722,
+    "variance_reduction": 0.016433091395768318,
+    "note": "computed"
+  },
+  "risk_band_binary_uplift": [
+    {
+      "risk_band": "high",
+      "control": 0.14640198511166252,
+      "treatment": 0.29219143576826195,
+      "rate_diff_treat_minus_control": 0.14578945065659943
+    },
+    {
+      "risk_band": "low",
+      "control": 0.5495049504950495,
+      "treatment": 0.6515151515151515,
+      "rate_diff_treat_minus_control": 0.10201020102010194
+    },
+    {
+      "risk_band": "mid",
+      "control": 0.3256997455470738,
+      "treatment": 0.48894348894348894,
+      "rate_diff_treat_minus_control": 0.16324374339641512
+    }
+  ],
+  "risk_band_binary_tests": [
+    {
+      "risk_band": "high",
+      "n_control": 403,
+      "n_treatment": 397,
+      "control_rate": 0.14640198511166252,
+      "treatment_rate": 0.29219143576826195,
+      "rate_diff": 0.14578945065659943,
+      "z_stat": 4.987235042043942,
+      "p_value": 6.124953338134039e-07,
+      "q_value_bh": 1.8374860014402118e-06,
+      "significant_fdr_bh": true
+    },
+    {
+      "risk_band": "low",
+      "n_control": 404,
+      "n_treatment": 396,
+      "control_rate": 0.5495049504950495,
+      "treatment_rate": 0.6515151515151515,
+      "rate_diff": 0.10201020102010194,
+      "z_stat": 2.944633608228477,
+      "p_value": 0.0032333730839876032,
+      "q_value_bh": 0.0032333730839876032,
+      "significant_fdr_bh": true
+    },
+    {
+      "risk_band": "mid",
+      "n_control": 393,
+      "n_treatment": 407,
+      "control_rate": 0.3256997455470738,
+      "treatment_rate": 0.48894348894348894,
+      "rate_diff": 0.16324374339641512,
+      "z_stat": 4.695378118998874,
+      "p_value": 2.661140031685806e-06,
+      "q_value_bh": 3.9917100475287095e-06,
+      "significant_fdr_bh": true
+    }
+  ],
+  "risk_band_continuous_tests": [
+    {
+      "risk_band": "high",
+      "n_control": 403,
+      "n_treatment": 397,
+      "control_mean": 21.832233250620344,
+      "treatment_mean": 46.689546599496225,
+      "difference": 24.85731334887588,
+      "welch_t": 5.3352795903748005,
+      "p_value": 1.277830245874887e-07,
+      "q_value_bh": 3.833490737624661e-07,
+      "significant_fdr_bh": true
+    },
+    {
+      "risk_band": "low",
+      "n_control": 404,
+      "n_treatment": 396,
+      "control_mean": 58.49443663366336,
+      "treatment_mean": 84.8838787878788,
+      "difference": 26.389442154215438,
+      "welch_t": 4.453142381536211,
+      "p_value": 9.686736707731965e-06,
+      "q_value_bh": 1.4530105061597949e-05,
+      "significant_fdr_bh": true
+    },
+    {
+      "risk_band": "mid",
+      "n_control": 393,
+      "n_treatment": 407,
+      "control_mean": 45.791912977099244,
+      "treatment_mean": 68.25293415233415,
+      "difference": 22.461021175234904,
+      "welch_t": 4.0783975259649425,
+      "p_value": 4.98980513065612e-05,
+      "q_value_bh": 4.98980513065612e-05,
+      "significant_fdr_bh": true
+    }
+  ]
+}

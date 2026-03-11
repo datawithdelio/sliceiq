@@ -1,0 +1,291 @@
+{
+  "generated_at_utc": "2026-03-11T05:03:07.846168+00:00",
+  "summary": {
+    "pass": 26
+  },
+  "by_chapter": {
+    "ch3": {
+      "pass": 4
+    },
+    "ch4": {
+      "pass": 5
+    },
+    "ch5": {
+      "pass": 3
+    },
+    "ch6": {
+      "pass": 4
+    },
+    "ch7": {
+      "pass": 7
+    },
+    "ch8": {
+      "pass": 3
+    }
+  },
+  "rows": [
+    {
+      "domain": "causal_gate",
+      "chapter": "ch7",
+      "check": "ab_multiple_testing_control",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "ml/data/reports/causal/ab_test/ab_test_results.json :: risk_band_binary_tests[*].q_value_bh",
+      "why_it_matters": "FDR control reduces false positives across segmented experiment reads."
+    },
+    {
+      "domain": "causal_gate",
+      "chapter": "ch7",
+      "check": "ab_sample_ratio_mismatch",
+      "status": "pass",
+      "value": false,
+      "threshold": "False",
+      "evidence": "ml/data/reports/causal/ab_test/ab_test_results.json :: srm.flag",
+      "why_it_matters": "SRM failures invalidate randomization assumptions."
+    },
+    {
+      "domain": "causal_gate",
+      "chapter": "ch7",
+      "check": "causal_release_decision",
+      "status": "pass",
+      "value": "ship",
+      "threshold": "ship",
+      "evidence": "ml/data/reports/causal/causal_release_decision.json",
+      "why_it_matters": "Production launch should be consistent with causal release evidence."
+    },
+    {
+      "domain": "causal_gate",
+      "chapter": "ch7",
+      "check": "did_effect_significance",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "ml/data/reports/causal/causal_release_decision.json :: checks.did_stat_ok",
+      "why_it_matters": "Significance guardrails prevent noise-driven decisioning."
+    },
+    {
+      "domain": "causal_gate",
+      "chapter": "ch7",
+      "check": "did_parallel_trends_guardrail",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "ml/data/reports/causal/causal_release_decision.json :: checks.pretrend_ok",
+      "why_it_matters": "Parallel trends is a core identification assumption for DiD."
+    },
+    {
+      "domain": "causal_gate",
+      "chapter": "ch7",
+      "check": "did_placebo_guardrail",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "ml/data/reports/causal/causal_release_decision.json :: checks.placebo_ok",
+      "why_it_matters": "A placebo fail suggests hidden confounding or timing artifacts."
+    },
+    {
+      "domain": "causal_gate",
+      "chapter": "ch7",
+      "check": "did_ready_for_regression",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "ml/data/reports/causal/causal_release_decision.json :: checks.did_ready_for_regression",
+      "why_it_matters": "DiD checks should pass minimum data support before trusting effect estimates."
+    },
+    {
+      "domain": "cohort_ts",
+      "chapter": "ch4",
+      "check": "cohort_daily_anomalies",
+      "status": "pass",
+      "value": 6,
+      "threshold": "<= 12 (warn <= 20)",
+      "evidence": "ml/data/reports/causal/cohort_time_series/cohort_time_series_summary.json",
+      "why_it_matters": "Anomaly pressure gives early warning for distributional instability."
+    },
+    {
+      "domain": "study_guide",
+      "chapter": "ch3",
+      "check": "date_scaffold_continuity",
+      "status": "pass",
+      "value": 0,
+      "threshold": "0 missing days",
+      "evidence": "expected_days=172, observed_days=172",
+      "why_it_matters": "Chapter 3 warns sparse timelines silently break rolling logic without scaffolding."
+    },
+    {
+      "domain": "study_guide",
+      "chapter": "ch3",
+      "check": "lag_rolling_zscore_features_present",
+      "status": "pass",
+      "value": 4,
+      "threshold": "4 of 4",
+      "evidence": "found=['orders_30d_lag1', 'orders_30d_roll3_mean_lagged', 'orders_30d_zscore_snapshot', 'revenue_lookback_lag1']",
+      "why_it_matters": "Implements chapter 3 window-function style lag + rolling + anomaly framing."
+    },
+    {
+      "domain": "study_guide",
+      "chapter": "ch3",
+      "check": "rolling_window_count_integrity",
+      "status": "pass",
+      "value": 1.0,
+      "threshold": ">= 0.90 mature rows with full 28-row context",
+      "evidence": "daily_timeseries rolling(28, min_periods=7) count diagnostics",
+      "why_it_matters": "Chapter 3 explicitly recommends window-size count validation to avoid off-by-one errors."
+    },
+    {
+      "domain": "study_guide",
+      "chapter": "ch3",
+      "check": "seasonality_features_present",
+      "status": "pass",
+      "value": 3,
+      "threshold": "3 of 3",
+      "evidence": "found=['snapshot_month', 'snapshot_week_cos', 'snapshot_week_sin']",
+      "why_it_matters": "Seasonality controls reduce false signals in temporal comparisons."
+    },
+    {
+      "domain": "study_guide",
+      "chapter": "ch4",
+      "check": "cohort_artifacts_present",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "cohort_retention_matrix.csv + cohort_fixed_window_metrics.csv",
+      "why_it_matters": "Chapter 4 requires cohort and fixed-window views for fair temporal comparisons."
+    },
+    {
+      "domain": "study_guide",
+      "chapter": "ch4",
+      "check": "cohort_period0_anchor_integrity",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "cohort_retention_matrix.csv :: column '0' should be 1.0",
+      "why_it_matters": "Correct denominator propagation is the backbone of retention analysis."
+    },
+    {
+      "domain": "study_guide",
+      "chapter": "ch4",
+      "check": "fixed_window_fairness_metrics",
+      "status": "pass",
+      "value": 0.6666666666666666,
+      "threshold": ">= 0.40 mature 90d cohorts (warn-only)",
+      "evidence": "cohort_fixed_window_metrics.csv",
+      "why_it_matters": "Returnship/cumulative fixed windows reduce cohort-age bias."
+    },
+    {
+      "domain": "study_guide",
+      "chapter": "ch4",
+      "check": "retention_values_within_bounds",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "All retention matrix values constrained to [0,1]",
+      "why_it_matters": "Invalid retention bounds indicate denominator or aggregation defects."
+    },
+    {
+      "domain": "study_guide",
+      "chapter": "ch5",
+      "check": "categorical_text_normalization",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "scoring risk_bucket values lowercased",
+      "why_it_matters": "Chapter 5 emphasizes normalization to prevent silent category duplication."
+    },
+    {
+      "domain": "study_guide",
+      "chapter": "ch5",
+      "check": "text_artifact_or_proxy_signal",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "reviews_clean_exists=False, proxies=True",
+      "why_it_matters": "Chapter 5 signals can come from full text artifacts or stable text-adjacent proxy features."
+    },
+    {
+      "domain": "study_guide",
+      "chapter": "ch5",
+      "check": "text_proxy_features_present",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "found=['avg_rating_lifetime', 'review_count_lifetime']",
+      "why_it_matters": "Even without full NLP, text-adjacent proxies preserve sentiment/review signal."
+    },
+    {
+      "domain": "study_guide",
+      "chapter": "ch6",
+      "check": "anomaly_feature_pack",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "found=['is_gap_anomaly_2x', 'is_gap_anomaly_3x', 'revenue_lookback_zscore_snapshot']",
+      "why_it_matters": "Chapter 6 anomaly workflows need explicit anomaly flags in feature engineering."
+    },
+    {
+      "domain": "study_guide",
+      "chapter": "ch6",
+      "check": "daily_anomaly_report_exists",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "/Users/deliorincon/Desktop/Sliceiq/ml/data/reports/causal/cohort_time_series/daily_order_anomalies.csv",
+      "why_it_matters": "An explicit anomaly report supports root-cause analysis before release decisions."
+    },
+    {
+      "domain": "study_guide",
+      "chapter": "ch6",
+      "check": "gap_anomaly_prevalence",
+      "status": "pass",
+      "value": {
+        "is_gap_anomaly_2x": 0.5266821345707656,
+        "is_gap_anomaly_3x": 0.47447795823665895
+      },
+      "threshold": "pass when 10%-70% for 2x flag and 3x flag <= 2x flag",
+      "evidence": "feature_dataset gap anomaly flag prevalence",
+      "why_it_matters": "Anomaly flags should be informative but not degenerate."
+    },
+    {
+      "domain": "study_guide",
+      "chapter": "ch6",
+      "check": "outlier_impact_global_vs_subgroup",
+      "status": "pass",
+      "value": 8.251775555312836,
+      "threshold": "warn only when ratio >= 2 and subgroup impact >= 5%",
+      "evidence": "global=0.002268014071322246, subgroup=0.01871514307284245",
+      "why_it_matters": "Chapter 6 stresses subgroup outlier impact can diverge from global impact."
+    },
+    {
+      "domain": "study_guide",
+      "chapter": "ch8",
+      "check": "dimensionality_reduction_flags",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "found=['is_gap_anomaly_2x', 'is_high_engagement', 'is_high_value']",
+      "why_it_matters": "Flags/buckets are chapter 8 core techniques for manageable production datasets."
+    },
+    {
+      "domain": "study_guide",
+      "chapter": "ch8",
+      "check": "governance_artifacts_present",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "deployment summary + monitoring + causal decision",
+      "why_it_matters": "Chapter 8 emphasizes reusable audited datasets over ad-hoc query output."
+    },
+    {
+      "domain": "study_guide",
+      "chapter": "ch8",
+      "check": "scoring_output_pii_hygiene",
+      "status": "pass",
+      "value": 0,
+      "threshold": "== 0 PII-like columns",
+      "evidence": "pii_like_columns=[]",
+      "why_it_matters": "Chapter 8 data governance includes minimizing PII exposure in shared outputs."
+    }
+  ]
+}

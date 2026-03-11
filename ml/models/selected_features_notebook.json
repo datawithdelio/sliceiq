@@ -1,0 +1,28 @@
+{
+  "selected_features": [
+    "recency_gap_ratio",
+    "revenue_lookback_lag1",
+    "cohort_revenue_index",
+    "revenue_lookback_zscore_snapshot",
+    "log1p_std_order_value_lookback",
+    "orders_60d",
+    "log1p_revenue_lookback",
+    "std_order_value_lookback_clip",
+    "std_order_value_lookback",
+    "orders_30d_per_age",
+    "orders_lookback",
+    "log1p_avg_gap_days_lookback",
+    "log1p_gap_multiplier",
+    "value_gap_ratio",
+    "revenue_lookback",
+    "orders_30d_zscore_snapshot",
+    "max_gap_days_lookback",
+    "revenue_per_order_lifetime",
+    "orders_30d_roll3_mean_lagged",
+    "std_gap_days_lookback",
+    "orders_30d",
+    "orders_30d_lag1",
+    "avg_gap_days_lookback",
+    "days_since_last_order_vs_roll3"
+  ]
+}

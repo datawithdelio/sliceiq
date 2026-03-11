@@ -1,0 +1,33 @@
+domain,chapter,check,status,value,threshold,evidence,why_it_matters
+artifacts,,ab_results_path_exists,pass,True,True,/Users/deliorincon/Desktop/Sliceiq/ml/data/reports/causal/ab_test/ab_test_results.json,Causal production decisioning depends on upstream notebook artifacts.
+artifacts,,cohort_summary_path_exists,pass,True,True,/Users/deliorincon/Desktop/Sliceiq/ml/data/reports/causal/cohort_time_series/cohort_time_series_summary.json,Causal production decisioning depends on upstream notebook artifacts.
+artifacts,,deploy_summary_path_exists,pass,True,True,/Users/deliorincon/Desktop/Sliceiq/ml/data/reports/churn/deployment_scoring_summary.json,Causal production decisioning depends on upstream notebook artifacts.
+artifacts,,did_results_path_exists,pass,True,True,/Users/deliorincon/Desktop/Sliceiq/ml/data/reports/causal/did/did_results.json,Causal production decisioning depends on upstream notebook artifacts.
+artifacts,,metrics_path_exists,pass,True,True,/Users/deliorincon/Desktop/Sliceiq/ml/models/churn_reorder_metrics.json,Causal production decisioning depends on upstream notebook artifacts.
+artifacts,,model_release_path_exists,pass,True,True,/Users/deliorincon/Desktop/Sliceiq/ml/models/release_preflight_report.json,Causal production decisioning depends on upstream notebook artifacts.
+causal_ab,ch7,ab_binary_effect_quality,pass,"{'p_value': 9.857681621527965e-12, 'rate_diff': 0.13666666666666666, 'practical_ok': True}",p<0.05 and lift>=0.005,ab_test_results.json :: binary_results,Statistical and practical lift should both pass before broad rollout.
+causal_ab,ch7,ab_binary_ready,pass,True,True,ab_test_results.json :: readiness.ab_binary_ready,Binary conversion inference must meet minimum data support.
+causal_ab,ch7,ab_continuous_ready,pass,True,True,ab_test_results.json :: readiness.ab_continuous_ready,Continuous-metric inference requires adequate per-variant support.
+causal_ab,ch7,ab_covariate_balance_smd,pass,0.03102386096898505,<= 0.10 (warn <= 0.20),ab_test_results.json :: covariate_balance_smd,Large imbalance can bias treatment effect estimates.
+causal_ab,ch7,ab_cuped_effect_quality,pass,"{'p_value': 1.4718815382231834e-14, 'difference': 24.334055040235526, 'variance_reduction': 0.016433091395768318}",p<0.05 and difference>=0.0,ab_test_results.json :: cuped_results,CUPED-adjusted effects improve precision for rollout confidence.
+causal_ab,ch7,ab_heterogeneity_coverage,pass,"{'binary_bands': 3, 'continuous_bands': 3}",>= 2 risk bands per metric,ab_test_results.json :: risk_band tests,Consistent uplift across segments supports stable production targeting.
+causal_ab,ch7,ab_heterogeneity_ready,pass,True,True,ab_test_results.json :: readiness.ab_heterogeneity_ready,Segment-level heterogeneity is required for targeted rollout policy.
+causal_ab,ch7,ab_multiple_testing_control,pass,True,True,ab_test_results.json :: risk_band_*_tests with q_value_bh,Chapter 7 recommends explicit control for segmented testing multiplicity.
+causal_ab,ch7,ab_srm_guardrail,pass,False,False,ab_test_results.json :: srm.flag,SRM failures undermine randomization validity.
+causal_did,ch3,did_pre_post_period_integrity,pass,True,True,did_results.json :: manual pre/post cells,Chapter 3 time comparisons require complete and consistent period definitions.
+causal_did,ch7,did_parallel_trends_guardrail,pass,True,True,causal_release_decision.json :: checks.pretrend_ok,Parallel trends is central to DiD identification validity.
+causal_did,ch7,did_placebo_guardrail,pass,True,True,causal_release_decision.json :: checks.placebo_ok,Placebo checks reduce risk of spurious treatment effects.
+causal_did,ch7,did_primary_effect_practical,pass,True,True,causal_release_decision.json :: checks.did_practical_ok,Practical effect size determines whether rollout impact is meaningful.
+causal_did,ch7,did_primary_effect_significance,pass,True,True,causal_release_decision.json :: checks.did_stat_ok,Significance is a minimum requirement for causal rollout confidence.
+causal_did,ch7,did_ready_for_regression,pass,True,True,did_results.json :: readiness.did_ready_for_regression,Regression DiD should only run when support and cells are sufficient.
+context,ch3,cohort_period_depth,pass,6,>= 4 periods,cohort_time_series_summary.json :: max_period,Adequate period depth supports stable time-based interpretation.
+context,ch3,daily_anomaly_pressure,pass,6,<= 12 (warn <= 20),cohort_time_series_summary.json :: daily_anomalies,High anomaly pressure can invalidate near-term rollout assumptions.
+context,ch4,cohort_coverage,pass,7,>= 3 cohorts,cohort_time_series_summary.json :: cohorts,Cohort breadth improves external validity of observed treatment behavior.
+context,ch4,fixed_window_fairness_coverage,pass,0.6666666666666666,>= 0.40 cohorts with mature 90d window,cohort_fixed_window_metrics.csv,Chapter 4 fairness requires fixed windows to avoid exposure bias.
+cross_notebook,ch8,ab_to_live_population_shift_high_band,pass,0.36166666666666664,<= 0.40 (warn <= 0.55),"ab_high_share=0.3333333333333333, live_high_share=0.695",Chapter 8 emphasizes production datasets may differ from experiment cohorts.
+cross_notebook,ch8,deployment_sample_size,pass,200,>= 100,deployment_scoring_summary.json :: scored_users,Tiny live populations reduce confidence in rollout generalization.
+cross_notebook,ch8,model_production_gate_status,pass,ship,ship,release_preflight_report.json :: final_decision,Causal rollout should align with model-system readiness state.
+study_guide,ch5,text_proxy_signals_available,pass,True,True,"found=['avg_rating_lifetime', 'review_count_lifetime']",Chapter 5 encourages preserving normalized text-derived signal where available.
+study_guide,ch5,variant_label_normalization,pass,"{'control': 'control', 'treatment': 'treatment'}",distinct lower-case labels,ab_test_results.json :: control_label/treatment_label,Text normalization avoids silent group-key fragmentation.
+study_guide,ch8,causal_output_pii_hygiene,pass,0,0 pii-like keys,pii_like_keys_sample=[],Chapter 8 governance includes minimizing PII propagation in analytics artifacts.
+study_guide,ch8,governance_artifact_bundle,pass,True,True,AB + DiD + model release + deployment summary,"Chapter 8 favors reusable, audited data products over ad-hoc query outputs."

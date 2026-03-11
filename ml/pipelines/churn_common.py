@@ -239,7 +239,7 @@ WITH base_users AS (
 {label_cte_sql}
 SELECT
     bu.user_id,
-    :snapshot_date::date AS snapshot_date,
+    CAST(:snapshot_date AS date) AS snapshot_date,
     COALESCE(lf.orders_lookback, 0) AS orders_lookback,
     COALESCE(lf.orders_30d, 0) AS orders_30d,
     COALESCE(lf.orders_60d, 0) AS orders_60d,
@@ -383,4 +383,3 @@ def build_feature_vector(row: dict[str, Any], feature_names: list[str]) -> list[
         except (TypeError, ValueError):
             vector.append(float("nan"))
     return vector
-

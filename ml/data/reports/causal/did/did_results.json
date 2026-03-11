@@ -1,0 +1,76 @@
+{
+  "generated_at_utc": "2026-03-11T04:57:38.493676+00:00",
+  "readiness": {
+    "did_ready_for_manual": true,
+    "did_ready_for_regression": true,
+    "did_skip_reasons": [],
+    "basic_note": "computed",
+    "twfe_note": "computed",
+    "event_study_note": "no_relative_period_coefficients_estimated",
+    "parallel_note": "computed",
+    "placebo_note": "computed"
+  },
+  "manual": {
+    "control_pre": 2.3792639024390243,
+    "control_post": 2.331870776255708,
+    "treatment_pre": 1.8008433628318585,
+    "treatment_post": 2.464837735849057,
+    "did_manual": 0.7113874992005147
+  },
+  "manual_by_risk_band": [
+    {
+      "risk_band": "high",
+      "did_manual": 0.49254519771393274,
+      "control_pre": 0.669425,
+      "control_post": 0.6512710843373494,
+      "treatment_pre": 0.36697538461538465,
+      "treatment_post": 0.8413666666666667,
+      "rows": 288
+    },
+    {
+      "risk_band": "low",
+      "did_manual": 1.5746921701390058,
+      "control_pre": 4.342183116883117,
+      "control_post": 5.26314776119403,
+      "treatment_pre": 3.1663574712643676,
+      "treatment_post": 5.662014285714286,
+      "rows": 287
+    },
+    {
+      "risk_band": "mid",
+      "did_manual": 0.5200304543674108,
+      "control_pre": 1.6099055555555557,
+      "control_post": 1.507149275362319,
+      "treatment_pre": 1.4549202702702704,
+      "treatment_post": 1.8721944444444445,
+      "rows": 287
+    }
+  ],
+  "basic_regression": {
+    "formula": "outcome ~ treated + post + treated:post + pre_orders + risk_score + treated:post:risk_score",
+    "coef_treated_post": 1.2040727396147743,
+    "coef_ci_low": 0.668154566685829,
+    "coef_ci_high": 1.7399909125437198,
+    "p_value": 1.0649671847605551e-05,
+    "coef_treated_post_risk_score": -1.2813011211252077,
+    "p_value_treated_post_risk_score": 0.00023410108608295051
+  },
+  "twfe_regression": {
+    "formula": "outcome ~ treated:post + pre_orders + C(user_id) + C(period_str) + treated:post:risk_score",
+    "coef_treated_post": 1.62696070722666,
+    "coef_ci_low": 1.0095972805676674,
+    "coef_ci_high": 2.2443241338856526,
+    "p_value": 2.40226026549218e-07,
+    "coef_treated_post_risk_score": -1.836547732051815,
+    "p_value_treated_post_risk_score": 1.7428048402413957e-05
+  },
+  "parallel_trends_test": {
+    "coef_treated_time_pre": 0.3229796087119485,
+    "p_value": 0.25412001702228415
+  },
+  "event_study": [],
+  "placebo_did": {
+    "coef_treated_placebo_post": 0.23343044480140573,
+    "p_value": 0.2233936524259028
+  }
+}
