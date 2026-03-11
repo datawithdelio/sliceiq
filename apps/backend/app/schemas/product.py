@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime
 from decimal import Decimal
+from typing import Optional
 from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
@@ -9,7 +10,7 @@ from pydantic import BaseModel, ConfigDict
 
 class ProductBase(BaseModel):
     name: str
-    description: str | None = None
+    description: Optional[str] = None
     price: Decimal
     stock: int
 
@@ -28,10 +29,10 @@ class ProductCreate(ProductBase):
 
 
 class ProductUpdate(BaseModel):
-    name: str | None = None
-    description: str | None = None
-    price: Decimal | None = None
-    stock: int | None = None
+    name: Optional[str] = None
+    description: Optional[str] = None
+    price: Optional[Decimal] = None
+    stock: Optional[int] = None
 
     model_config = ConfigDict(
         json_schema_extra={

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime
 from decimal import Decimal
+from typing import Optional
 from uuid import UUID as PyUUID, uuid4
 
 from sqlalchemy import DateTime, ForeignKey, Numeric, String, func
@@ -18,8 +19,8 @@ class Order(Base):
     user_id: Mapped[PyUUID] = mapped_column(ForeignKey("users.id"), nullable=False, index=True)
     total_amount: Mapped[Decimal] = mapped_column(Numeric(10, 2), nullable=False)
     status: Mapped[str] = mapped_column(String(50), nullable=False, default="pending")
-    promo_id: Mapped[PyUUID | None] = mapped_column(ForeignKey("promos.id"), nullable=True, index=True)
-    stripe_session_id: Mapped[str | None] = mapped_column(String(255))
+    promo_id: Mapped[Optional[PyUUID]] = mapped_column(ForeignKey("promos.id"), nullable=True, index=True)
+    stripe_session_id: Mapped[Optional[str]] = mapped_column(String(255))
     delivery_address: Mapped[dict] = mapped_column(JSONB, nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
 

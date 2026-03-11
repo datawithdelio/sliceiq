@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from decimal import Decimal
+from typing import Optional
 from uuid import UUID as PyUUID, uuid4
 
 from sqlalchemy import ForeignKey, Integer, Numeric
@@ -18,7 +19,7 @@ class OrderItem(Base):
     product_id: Mapped[PyUUID] = mapped_column(ForeignKey("products.id"), nullable=False, index=True)
     quantity: Mapped[int] = mapped_column(Integer, nullable=False)
     unit_price: Mapped[Decimal] = mapped_column(Numeric(10, 2), nullable=False)
-    customizations: Mapped[dict | None] = mapped_column(JSONB)
+    customizations: Mapped[Optional[dict]] = mapped_column(JSONB)
 
     order: Mapped["Order"] = relationship("Order", back_populates="order_items")
     product: Mapped["Product"] = relationship("Product", back_populates="order_items")

@@ -4,7 +4,7 @@ import os
 import time
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import Any
+from typing import Any, Optional
 
 import httpx
 import jwt
@@ -15,8 +15,8 @@ from jwt import PyJWKClient
 
 @dataclass
 class ClerkJWTVerifier:
-    issuer: str | None
-    audience: str | None
+    issuer: Optional[str]
+    audience: Optional[str]
     jwks_url: str
 
     @classmethod
@@ -139,7 +139,7 @@ class ClerkJWTVerifier:
 
 
 @lru_cache
-def _verifier_or_none() -> ClerkJWTVerifier | None:
+def _verifier_or_none() -> Optional[ClerkJWTVerifier]:
     try:
         return ClerkJWTVerifier.from_env()
     except RuntimeError:
@@ -150,7 +150,7 @@ bearer_scheme = HTTPBearer(auto_error=False)
 
 
 def require_auth(
-    credentials: HTTPAuthorizationCredentials | None = Depends(bearer_scheme),
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(bearer_scheme),
 ) -> dict[str, Any]:
     verifier = _verifier_or_none()
     if verifier is None:

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from functools import lru_cache
 import json
 import os
@@ -122,7 +122,7 @@ def score_user_churn(
     if not isinstance(selected_features, list) or model is None:
         raise HTTPException(status_code=500, detail="Model artifact is missing required keys.")
 
-    snapshot_ts = datetime.now(UTC)
+    snapshot_ts = datetime.now(timezone.utc)
     history_days = int(os.getenv("CHURN_FEATURE_HISTORY_DAYS", "180"))
     rows = fetch_churn_feature_rows(
         db.get_bind(),
@@ -177,4 +177,3 @@ def score_user_churn(
         "scored_at_utc": snapshot_ts.isoformat(),
         "prediction_saved": saved,
     }
-
