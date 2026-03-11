@@ -1,0 +1,311 @@
+{
+  "generated_at_utc": "2026-03-11T05:21:50.264239+00:00",
+  "final_status": "pass",
+  "summary": {
+    "pass": 31,
+    "warn": 0,
+    "fail": 0,
+    "total": 31
+  },
+  "config": {
+    "min_roc_auc": 0.6,
+    "min_pr_auc": 0.4,
+    "max_brier": 0.2,
+    "min_scored_users": 100,
+    "min_cohorts": 3,
+    "min_periods": 4,
+    "max_daily_anomalies": 12,
+    "fail_on_warn": true
+  },
+  "checks": [
+    {
+      "domain": "artifacts",
+      "check": "metrics_path_exists",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "ml/models/churn_reorder_metrics.json",
+      "detail": "Required artifact must exist for submission."
+    },
+    {
+      "domain": "artifacts",
+      "check": "model_release_path_exists",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "ml/models/release_preflight_report.json",
+      "detail": "Required artifact must exist for submission."
+    },
+    {
+      "domain": "artifacts",
+      "check": "causal_release_path_exists",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "ml/data/reports/causal/causal_release_decision.json",
+      "detail": "Required artifact must exist for submission."
+    },
+    {
+      "domain": "artifacts",
+      "check": "deploy_summary_path_exists",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "ml/data/reports/churn/deployment_scoring_summary.json",
+      "detail": "Required artifact must exist for submission."
+    },
+    {
+      "domain": "artifacts",
+      "check": "cohort_summary_path_exists",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "ml/data/reports/causal/cohort_time_series/cohort_time_series_summary.json",
+      "detail": "Required artifact must exist for submission."
+    },
+    {
+      "domain": "artifacts",
+      "check": "scoring_latest_path_exists",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "ml/data/churn_scoring_latest.csv",
+      "detail": "Required artifact must exist for submission."
+    },
+    {
+      "domain": "artifacts",
+      "check": "watchlist_path_exists",
+      "status": "pass",
+      "value": true,
+      "threshold": true,
+      "evidence": "ml/data/churn_scoring_top_watchlist.csv",
+      "detail": "Required artifact must exist for submission."
+    },
+    {
+      "domain": "model_quality",
+      "check": "test_roc_auc",
+      "status": "pass",
+      "value": 0.99804821257362,
+      "threshold": ">= 0.6",
+      "evidence": "churn_reorder_metrics.json :: test_metrics.roc_auc",
+      "detail": "AUC threshold for ranking quality."
+    },
+    {
+      "domain": "model_quality",
+      "check": "test_pr_auc",
+      "status": "pass",
+      "value": 0.997593772184553,
+      "threshold": ">= 0.4",
+      "evidence": "churn_reorder_metrics.json :: test_metrics.pr_auc",
+      "detail": "PR-AUC threshold for positive-class quality."
+    },
+    {
+      "domain": "model_quality",
+      "check": "test_brier_score",
+      "status": "pass",
+      "value": 0.02387510471226536,
+      "threshold": "<= 0.2",
+      "evidence": "churn_reorder_metrics.json :: test_metrics.brier_score",
+      "detail": "Calibration quality for probability outputs."
+    },
+    {
+      "domain": "model_quality",
+      "check": "model_version_present",
+      "status": "pass",
+      "value": "v20260311045627",
+      "threshold": "non-empty",
+      "evidence": "churn_reorder_metrics.json :: model_version",
+      "detail": "Versioned model artifacts support reproducibility."
+    },
+    {
+      "domain": "gates",
+      "check": "notebook_07_final_decision",
+      "status": "pass",
+      "value": "ship",
+      "threshold": "ship",
+      "evidence": "release_preflight_report.json :: final_decision",
+      "detail": "Model system must pass production readiness gate."
+    },
+    {
+      "domain": "gates",
+      "check": "notebook_07_release_blocked",
+      "status": "pass",
+      "value": false,
+      "threshold": false,
+      "evidence": "release_preflight_report.json :: release_blocked",
+      "detail": "Release should not be blocked at model gate."
+    },
+    {
+      "domain": "gates",
+      "check": "notebook_07_fail_count",
+      "status": "pass",
+      "value": 0,
+      "threshold": 0,
+      "evidence": "release_preflight_report.json :: check_counts.fail",
+      "detail": "No failing checks allowed in production preflight."
+    },
+    {
+      "domain": "gates",
+      "check": "notebook_07_warn_count",
+      "status": "pass",
+      "value": 0,
+      "threshold": 0,
+      "evidence": "release_preflight_report.json :: check_counts.warn",
+      "detail": "Warnings should be zero for a clean final handoff."
+    },
+    {
+      "domain": "gates",
+      "check": "notebook_07_readiness_score",
+      "status": "pass",
+      "value": 1.0,
+      "threshold": ">= 0.95",
+      "evidence": "release_preflight_report.json :: readiness_score",
+      "detail": "High readiness score reduces launch risk."
+    },
+    {
+      "domain": "gates",
+      "check": "notebook_08_final_decision",
+      "status": "pass",
+      "value": "ship",
+      "threshold": "ship",
+      "evidence": "causal_release_decision.json :: final_decision",
+      "detail": "Causal rollout must pass production decisioning gate."
+    },
+    {
+      "domain": "gates",
+      "check": "notebook_08_fail_count",
+      "status": "pass",
+      "value": 0,
+      "threshold": 0,
+      "evidence": "causal_release_decision.json :: check_counts.fail",
+      "detail": "No failing checks allowed in causal gate."
+    },
+    {
+      "domain": "gates",
+      "check": "notebook_08_warn_count",
+      "status": "pass",
+      "value": 0,
+      "threshold": 0,
+      "evidence": "causal_release_decision.json :: check_counts.warn",
+      "detail": "Warnings should be zero for final submission quality."
+    },
+    {
+      "domain": "gates",
+      "check": "notebook_08_readiness_score",
+      "status": "pass",
+      "value": 1.0,
+      "threshold": ">= 0.95",
+      "evidence": "causal_release_decision.json :: readiness_score",
+      "detail": "High readiness score indicates robust causal diagnostics."
+    },
+    {
+      "domain": "deployment",
+      "check": "deployment_scored_users",
+      "status": "pass",
+      "value": 200,
+      "threshold": ">= 100",
+      "evidence": "deployment_scoring_summary.json :: scored_users",
+      "detail": "Small batches produce unstable monitoring and cohort rates."
+    },
+    {
+      "domain": "deployment",
+      "check": "deployment_missing_selected_features",
+      "status": "pass",
+      "value": 0,
+      "threshold": 0,
+      "evidence": "deployment_scoring_summary.json :: missing_selected_features",
+      "detail": "Scoring should use the same selected feature set as training."
+    },
+    {
+      "domain": "deployment",
+      "check": "deployment_model_version_present",
+      "status": "pass",
+      "value": "v20260311045627",
+      "threshold": "non-empty",
+      "evidence": "deployment_scoring_summary.json :: model_version",
+      "detail": "Deployment report should be tied to a concrete model version."
+    },
+    {
+      "domain": "consistency",
+      "check": "model_version_consistency_metrics_vs_deploy",
+      "status": "pass",
+      "value": {
+        "metrics": "v20260311045627",
+        "deploy": "v20260311045627"
+      },
+      "threshold": "equal non-empty model_version",
+      "evidence": "metrics.model_version vs deployment_scoring_summary.model_version",
+      "detail": "Cross-artifact version consistency is required for auditability."
+    },
+    {
+      "domain": "cohort_timeseries",
+      "check": "cohort_count",
+      "status": "pass",
+      "value": 7,
+      "threshold": ">= 3",
+      "evidence": "cohort_time_series_summary.json :: cohorts",
+      "detail": "Sufficient cohort breadth improves external validity."
+    },
+    {
+      "domain": "cohort_timeseries",
+      "check": "cohort_period_depth",
+      "status": "pass",
+      "value": 6,
+      "threshold": ">= 4",
+      "evidence": "cohort_time_series_summary.json :: max_period",
+      "detail": "Sufficient period depth is needed for robust retention trends."
+    },
+    {
+      "domain": "cohort_timeseries",
+      "check": "daily_anomaly_pressure",
+      "status": "pass",
+      "value": 6,
+      "threshold": "<= 12",
+      "evidence": "cohort_time_series_summary.json :: daily_anomalies",
+      "detail": "Large anomaly counts can invalidate short-term comparisons."
+    },
+    {
+      "domain": "scoring_outputs",
+      "check": "scoring_latest_row_count",
+      "status": "pass",
+      "value": 200,
+      "threshold": ">= 100",
+      "evidence": "ml/data/churn_scoring_latest.csv",
+      "detail": "Scoring file should have enough rows to match deployment summary."
+    },
+    {
+      "domain": "scoring_outputs",
+      "check": "scoring_latest_has_risk_columns",
+      "status": "pass",
+      "value": [
+        "churn_probability_30d",
+        "predicted_churn_risk_30d",
+        "risk_bucket"
+      ],
+      "threshold": "contains risk probability column + risk label column + risk_bucket",
+      "evidence": "ml/data/churn_scoring_latest.csv",
+      "detail": "Downstream dashboards and interventions require standard risk fields."
+    },
+    {
+      "domain": "scoring_outputs",
+      "check": "watchlist_non_empty",
+      "status": "pass",
+      "value": 50,
+      "threshold": "> 0",
+      "evidence": "ml/data/churn_scoring_top_watchlist.csv",
+      "detail": "Top-watchlist should be materialized for business actioning."
+    },
+    {
+      "domain": "scoring_outputs",
+      "check": "watchlist_sorted_by_churn_probability",
+      "status": "pass",
+      "value": {
+        "sorted": true,
+        "column": "churn_probability_30d"
+      },
+      "threshold": "descending by churn_probability_30d or churn_probability",
+      "evidence": "ml/data/churn_scoring_top_watchlist.csv",
+      "detail": "Watchlist ordering should prioritize highest-risk users first."
+    }
+  ]
+}

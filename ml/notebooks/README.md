@@ -17,3 +17,5 @@ Notes:
 - Re-run `00_data_cleaning.ipynb` whenever source data changes significantly.
 - `07` is the release gate for model production.
 - `08` is the release gate for causal experiment rollout decisions.
+- After `08`, run `python -m ml.pipelines.final_submission_validate --fail-on-warn`.
+- If VS Code prompts "content of the file is newer", use `Overwrite` to keep latest executed outputs.

@@ -1,0 +1,41 @@
+# Final Submission Validation
+
+- Generated at (UTC): 2026-03-11T05:21:50.264239+00:00
+- Final status: `pass`
+- Pass checks: 31
+- Warn checks: 0
+- Fail checks: 0
+- Fail on warn: True
+
+## Findings
+- [PASS] artifacts::metrics_path_exists | value=True | threshold=True | Required artifact must exist for submission.
+- [PASS] artifacts::model_release_path_exists | value=True | threshold=True | Required artifact must exist for submission.
+- [PASS] artifacts::causal_release_path_exists | value=True | threshold=True | Required artifact must exist for submission.
+- [PASS] artifacts::deploy_summary_path_exists | value=True | threshold=True | Required artifact must exist for submission.
+- [PASS] artifacts::cohort_summary_path_exists | value=True | threshold=True | Required artifact must exist for submission.
+- [PASS] artifacts::scoring_latest_path_exists | value=True | threshold=True | Required artifact must exist for submission.
+- [PASS] artifacts::watchlist_path_exists | value=True | threshold=True | Required artifact must exist for submission.
+- [PASS] model_quality::test_roc_auc | value=0.99804821257362 | threshold=>= 0.6 | AUC threshold for ranking quality.
+- [PASS] model_quality::test_pr_auc | value=0.997593772184553 | threshold=>= 0.4 | PR-AUC threshold for positive-class quality.
+- [PASS] model_quality::test_brier_score | value=0.02387510471226536 | threshold=<= 0.2 | Calibration quality for probability outputs.
+- [PASS] model_quality::model_version_present | value=v20260311045627 | threshold=non-empty | Versioned model artifacts support reproducibility.
+- [PASS] gates::notebook_07_final_decision | value=ship | threshold=ship | Model system must pass production readiness gate.
+- [PASS] gates::notebook_07_release_blocked | value=False | threshold=False | Release should not be blocked at model gate.
+- [PASS] gates::notebook_07_fail_count | value=0 | threshold=0 | No failing checks allowed in production preflight.
+- [PASS] gates::notebook_07_warn_count | value=0 | threshold=0 | Warnings should be zero for a clean final handoff.
+- [PASS] gates::notebook_07_readiness_score | value=1.0 | threshold=>= 0.95 | High readiness score reduces launch risk.
+- [PASS] gates::notebook_08_final_decision | value=ship | threshold=ship | Causal rollout must pass production decisioning gate.
+- [PASS] gates::notebook_08_fail_count | value=0 | threshold=0 | No failing checks allowed in causal gate.
+- [PASS] gates::notebook_08_warn_count | value=0 | threshold=0 | Warnings should be zero for final submission quality.
+- [PASS] gates::notebook_08_readiness_score | value=1.0 | threshold=>= 0.95 | High readiness score indicates robust causal diagnostics.
+- [PASS] deployment::deployment_scored_users | value=200 | threshold=>= 100 | Small batches produce unstable monitoring and cohort rates.
+- [PASS] deployment::deployment_missing_selected_features | value=0 | threshold=0 | Scoring should use the same selected feature set as training.
+- [PASS] deployment::deployment_model_version_present | value=v20260311045627 | threshold=non-empty | Deployment report should be tied to a concrete model version.
+- [PASS] consistency::model_version_consistency_metrics_vs_deploy | value={'metrics': 'v20260311045627', 'deploy': 'v20260311045627'} | threshold=equal non-empty model_version | Cross-artifact version consistency is required for auditability.
+- [PASS] cohort_timeseries::cohort_count | value=7 | threshold=>= 3 | Sufficient cohort breadth improves external validity.
+- [PASS] cohort_timeseries::cohort_period_depth | value=6 | threshold=>= 4 | Sufficient period depth is needed for robust retention trends.
+- [PASS] cohort_timeseries::daily_anomaly_pressure | value=6 | threshold=<= 12 | Large anomaly counts can invalidate short-term comparisons.
+- [PASS] scoring_outputs::scoring_latest_row_count | value=200 | threshold=>= 100 | Scoring file should have enough rows to match deployment summary.
+- [PASS] scoring_outputs::scoring_latest_has_risk_columns | value=['churn_probability_30d', 'predicted_churn_risk_30d', 'risk_bucket'] | threshold=contains risk probability column + risk label column + risk_bucket | Downstream dashboards and interventions require standard risk fields.
+- [PASS] scoring_outputs::watchlist_non_empty | value=50 | threshold=> 0 | Top-watchlist should be materialized for business actioning.
+- [PASS] scoring_outputs::watchlist_sorted_by_churn_probability | value={'sorted': True, 'column': 'churn_probability_30d'} | threshold=descending by churn_probability_30d or churn_probability | Watchlist ordering should prioritize highest-risk users first.

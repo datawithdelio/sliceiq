@@ -105,6 +105,10 @@ python -m ml.pipelines.churn_production_monitor
 python -m ml.pipelines.causal_decision_gate
 ```
 
+```bash
+python -m ml.pipelines.final_submission_validate --fail-on-warn
+```
+
 ## Outputs
 
 - Dataset: `ml/data/churn_training_dataset.csv`
@@ -119,6 +123,7 @@ python -m ml.pipelines.causal_decision_gate
 - Production preflight report: `ml/models/release_preflight_report.json`
 - Production drift report: `ml/data/reports/churn/production_monitoring.json`
 - Causal release decision: `ml/data/reports/causal/causal_release_decision.json`
+- Final submission validation report: `ml/data/reports/churn/final_submission_validation.json`
 
 ## How This Maps to Your Notes
 
