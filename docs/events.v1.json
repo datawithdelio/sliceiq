@@ -1,0 +1,114 @@
+{
+  "version": "v1",
+  "notes": "Schemas reflect current API responses and monitoring artifacts. Webhook ingestion is not implemented yet; schema is frozen for external parity.",
+  "events": [
+    {
+      "name": "order.created",
+      "status": "active",
+      "source": "POST /orders/ response",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string", "format": "uuid"},
+          "user_id": {"type": "string", "format": "uuid"},
+          "status": {"type": "string"},
+          "total_amount": {"type": "number"},
+          "promo_id": {"type": ["string", "null"], "format": "uuid"},
+          "delivery_address": {"type": "object"},
+          "created_at": {"type": "string", "format": "date-time"}
+        },
+        "required": ["id", "user_id", "status", "total_amount", "delivery_address", "created_at"]
+      }
+    },
+    {
+      "name": "order.status_updated",
+      "status": "active",
+      "source": "PATCH /orders/{order_id}/status response",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "order_id": {"type": "string", "format": "uuid"},
+          "status": {"type": "string"},
+          "message": {"type": "string"}
+        },
+        "required": ["order_id", "status", "message"]
+      }
+    },
+    {
+      "name": "payment.checkout_session_created",
+      "status": "active",
+      "source": "Stripe Checkout session created in POST /orders/",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "order_id": {"type": "string", "format": "uuid"},
+          "stripe_session_id": {"type": "string"},
+          "amount_cents": {"type": "integer"},
+          "currency": {"type": "string"}
+        },
+        "required": ["order_id", "stripe_session_id", "amount_cents", "currency"]
+      }
+    },
+    {
+      "name": "stripe.webhook.event",
+      "status": "not_implemented",
+      "source": "Stripe webhook (not yet handled in backend)",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string"},
+          "type": {"type": "string"},
+          "created": {"type": "integer"},
+          "data": {"type": "object"}
+        },
+        "required": ["id", "type", "created", "data"]
+      }
+    },
+    {
+      "name": "monitoring.churn_model_drift",
+      "status": "active",
+      "source": "ml/data/reports/churn/production_monitoring.json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "generated_at_utc": {"type": "string", "format": "date-time"},
+          "model_version": {"type": "string"},
+          "scored_users": {"type": "integer"},
+          "psi": {"type": "number"},
+          "js_divergence": {"type": "number"},
+          "current_mean_score": {"type": "number"},
+          "current_std_score": {"type": "number"},
+          "baseline_mean_score": {"type": "number"},
+          "baseline_std_score": {"type": "number"},
+          "recommended_threshold": {"type": "number"},
+          "risk_mix": {"type": "object"},
+          "near_threshold_rate": {"type": "number"},
+          "predicted_positive_rate_live": {"type": "number"},
+          "predicted_positive_rate_test": {"type": "number"},
+          "predicted_positive_rate_delta": {"type": "number"},
+          "alerts": {"type": "object"},
+          "thresholds": {"type": "object"}
+        },
+        "required": [
+          "generated_at_utc",
+          "model_version",
+          "scored_users",
+          "psi",
+          "js_divergence",
+          "current_mean_score",
+          "current_std_score",
+          "baseline_mean_score",
+          "baseline_std_score",
+          "recommended_threshold",
+          "risk_mix",
+          "near_threshold_rate",
+          "predicted_positive_rate_live",
+          "predicted_positive_rate_test",
+          "predicted_positive_rate_delta",
+          "alerts",
+          "thresholds"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,471 @@
+{
+  "ChurnScoreResponse": {
+    "properties": {
+      "churn_probability_30d": {
+        "type": "number"
+      },
+      "model_name": {
+        "type": "string"
+      },
+      "model_version": {
+        "type": "string"
+      },
+      "predicted_reorder_positive": {
+        "type": "boolean"
+      },
+      "prediction_saved": {
+        "type": "boolean"
+      },
+      "reorder_probability_30d": {
+        "type": "number"
+      },
+      "risk_bucket": {
+        "enum": [
+          "high",
+          "medium",
+          "low"
+        ],
+        "type": "string"
+      },
+      "scored_at_utc": {
+        "format": "date-time",
+        "type": "string"
+      },
+      "threshold": {
+        "type": "number"
+      },
+      "user_id": {
+        "format": "uuid",
+        "type": "string"
+      }
+    },
+    "required": [
+      "user_id",
+      "model_name",
+      "model_version",
+      "reorder_probability_30d",
+      "churn_probability_30d",
+      "threshold",
+      "predicted_reorder_positive",
+      "risk_bucket",
+      "scored_at_utc",
+      "prediction_saved"
+    ],
+    "title": "ChurnScoreResponse",
+    "type": "object"
+  },
+  "OrderCreate": {
+    "$defs": {
+      "OrderItemBase": {
+        "properties": {
+          "customizations": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Customizations"
+          },
+          "product_id": {
+            "format": "uuid",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "quantity": {
+            "title": "Quantity",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "product_id",
+          "quantity"
+        ],
+        "title": "OrderItemBase",
+        "type": "object"
+      }
+    },
+    "properties": {
+      "delivery_address": {
+        "additionalProperties": true,
+        "title": "Delivery Address",
+        "type": "object"
+      },
+      "items": {
+        "items": {
+          "$ref": "#/$defs/OrderItemBase"
+        },
+        "title": "Items",
+        "type": "array"
+      },
+      "promo_code": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Promo Code"
+      }
+    },
+    "required": [
+      "items",
+      "delivery_address"
+    ],
+    "title": "OrderCreate",
+    "type": "object"
+  },
+  "OrderResponse": {
+    "properties": {
+      "created_at": {
+        "format": "date-time",
+        "title": "Created At",
+        "type": "string"
+      },
+      "delivery_address": {
+        "additionalProperties": true,
+        "title": "Delivery Address",
+        "type": "object"
+      },
+      "id": {
+        "format": "uuid",
+        "title": "Id",
+        "type": "string"
+      },
+      "promo_id": {
+        "anyOf": [
+          {
+            "format": "uuid",
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Promo Id"
+      },
+      "status": {
+        "title": "Status",
+        "type": "string"
+      },
+      "total_amount": {
+        "title": "Total Amount",
+        "type": "number"
+      },
+      "user_id": {
+        "format": "uuid",
+        "title": "User Id",
+        "type": "string"
+      }
+    },
+    "required": [
+      "id",
+      "user_id",
+      "status",
+      "total_amount",
+      "promo_id",
+      "delivery_address",
+      "created_at"
+    ],
+    "title": "OrderResponse",
+    "type": "object"
+  },
+  "OrderStatusUpdate": {
+    "properties": {
+      "status": {
+        "title": "Status",
+        "type": "string"
+      }
+    },
+    "required": [
+      "status"
+    ],
+    "title": "OrderStatusUpdate",
+    "type": "object"
+  },
+  "ProductCreate": {
+    "example": {
+      "description": "Mozzarella, mushrooms, truffle oil.",
+      "name": "Truffle Pizza",
+      "price": "18.00",
+      "stock": 12
+    },
+    "properties": {
+      "description": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Description"
+      },
+      "name": {
+        "title": "Name",
+        "type": "string"
+      },
+      "price": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "type": "string"
+          }
+        ],
+        "title": "Price"
+      },
+      "stock": {
+        "title": "Stock",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "name",
+      "price",
+      "stock"
+    ],
+    "title": "ProductCreate",
+    "type": "object"
+  },
+  "ProductResponse": {
+    "example": {
+      "created_at": "2026-03-07T21:34:12.817256Z",
+      "description": "Mozzarella, mushrooms, truffle oil.",
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "name": "Truffle Pizza",
+      "price": "18.00",
+      "stock": 12
+    },
+    "properties": {
+      "created_at": {
+        "format": "date-time",
+        "title": "Created At",
+        "type": "string"
+      },
+      "description": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Description"
+      },
+      "id": {
+        "format": "uuid",
+        "title": "Id",
+        "type": "string"
+      },
+      "name": {
+        "title": "Name",
+        "type": "string"
+      },
+      "price": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "type": "string"
+          }
+        ],
+        "title": "Price"
+      },
+      "stock": {
+        "title": "Stock",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "name",
+      "price",
+      "stock",
+      "id",
+      "created_at"
+    ],
+    "title": "ProductResponse",
+    "type": "object"
+  },
+  "ProductUpdate": {
+    "example": {
+      "price": "19.50",
+      "stock": 10
+    },
+    "properties": {
+      "description": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Description"
+      },
+      "name": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Name"
+      },
+      "price": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Price"
+      },
+      "stock": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Stock"
+      }
+    },
+    "title": "ProductUpdate",
+    "type": "object"
+  },
+  "UserResponse": {
+    "properties": {
+      "address": {
+        "anyOf": [
+          {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Address"
+      },
+      "avatar_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Avatar Url"
+      },
+      "created_at": {
+        "format": "date-time",
+        "title": "Created At",
+        "type": "string"
+      },
+      "email": {
+        "format": "email",
+        "title": "Email",
+        "type": "string"
+      },
+      "full_name": {
+        "title": "Full Name",
+        "type": "string"
+      },
+      "id": {
+        "format": "uuid",
+        "title": "Id",
+        "type": "string"
+      },
+      "role": {
+        "title": "Role",
+        "type": "string"
+      }
+    },
+    "required": [
+      "id",
+      "email",
+      "full_name",
+      "role",
+      "avatar_url",
+      "address",
+      "created_at"
+    ],
+    "title": "UserResponse",
+    "type": "object"
+  },
+  "UserUpdate": {
+    "properties": {
+      "address": {
+        "anyOf": [
+          {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Address"
+      },
+      "avatar_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Avatar Url"
+      },
+      "full_name": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Full Name"
+      }
+    },
+    "title": "UserUpdate",
+    "type": "object"
+  }
+}

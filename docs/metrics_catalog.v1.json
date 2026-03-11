@@ -1,0 +1,143 @@
+{
+  "version": "v1",
+  "source_notebooks": [
+    "ml/notebooks/07_production_readiness.ipynb",
+    "ml/notebooks/08_causal_production_decisioning.ipynb"
+  ],
+  "metrics": [
+    {
+      "name": "psi",
+      "definition": "Population Stability Index between live and baseline score distributions.",
+      "source": "ml/data/reports/churn/production_monitoring.json",
+      "expected_range": "0.0-1.0 (lower is better)",
+      "alert_threshold": {
+        "warn": 0.25,
+        "alert": 0.4
+      }
+    },
+    {
+      "name": "js_divergence",
+      "definition": "Jensen-Shannon divergence between live and baseline score distributions.",
+      "source": "ml/data/reports/churn/production_monitoring.json",
+      "expected_range": "0.0-1.0 (lower is better)",
+      "alert_threshold": {
+        "warn": 0.02,
+        "alert": 0.03
+      }
+    },
+    {
+      "name": "current_mean_score",
+      "definition": "Mean churn score for live scoring window.",
+      "source": "ml/data/reports/churn/production_monitoring.json",
+      "expected_range": "0.0-1.0",
+      "alert_threshold": null
+    },
+    {
+      "name": "current_std_score",
+      "definition": "Standard deviation of churn score for live scoring window.",
+      "source": "ml/data/reports/churn/production_monitoring.json",
+      "expected_range": "0.0-1.0",
+      "alert_threshold": null
+    },
+    {
+      "name": "risk_mix.high",
+      "definition": "Share of users in high churn-risk bucket.",
+      "source": "ml/data/reports/churn/production_monitoring.json",
+      "expected_range": "0.0-1.0",
+      "alert_threshold": {
+        "warn": 0.7181159420289855,
+        "alert": 0.8181159420289855
+      }
+    },
+    {
+      "name": "risk_mix.low",
+      "definition": "Share of users in low churn-risk bucket.",
+      "source": "ml/data/reports/churn/production_monitoring.json",
+      "expected_range": "0.0-1.0",
+      "alert_threshold": {
+        "alert": 0.10217391304347825
+      }
+    },
+    {
+      "name": "predicted_positive_rate_live",
+      "definition": "Share of users predicted to reorder in live scoring window.",
+      "source": "ml/data/reports/churn/production_monitoring.json",
+      "expected_range": "0.0-1.0",
+      "alert_threshold": {
+        "max_delta": 0.15
+      }
+    },
+    {
+      "name": "near_threshold_rate",
+      "definition": "Share of users within epsilon of churn threshold.",
+      "source": "ml/data/reports/churn/production_monitoring.json",
+      "expected_range": "0.0-1.0",
+      "alert_threshold": null
+    },
+    {
+      "name": "roc_auc",
+      "definition": "ROC-AUC on validation/test splits.",
+      "source": "ml/models/churn_reorder_metrics.json",
+      "expected_range": "0.0-1.0",
+      "alert_threshold": null
+    },
+    {
+      "name": "pr_auc",
+      "definition": "PR-AUC on validation/test splits.",
+      "source": "ml/models/churn_reorder_metrics.json",
+      "expected_range": "0.0-1.0",
+      "alert_threshold": null
+    },
+    {
+      "name": "brier",
+      "definition": "Brier score (calibration error) on validation/test splits.",
+      "source": "ml/models/churn_reorder_metrics.json",
+      "expected_range": "0.0-1.0 (lower is better)",
+      "alert_threshold": null
+    },
+    {
+      "name": "target_rate",
+      "definition": "Observed reorder rate in snapshot window.",
+      "source": "ml/data/reports/churn/snapshot_metrics.csv",
+      "expected_range": "0.0-1.0",
+      "alert_threshold": null
+    },
+    {
+      "name": "avg_orders_30d",
+      "definition": "Average orders in the last 30 days per user.",
+      "source": "ml/data/reports/churn/snapshot_metrics.csv",
+      "expected_range": "0.0+",
+      "alert_threshold": null
+    },
+    {
+      "name": "avg_revenue_lookback",
+      "definition": "Average revenue per user over lookback window.",
+      "source": "ml/data/reports/churn/snapshot_metrics.csv",
+      "expected_range": "0.0+",
+      "alert_threshold": null
+    },
+    {
+      "name": "orders_zscore",
+      "definition": "Z-score for rolling order volume anomalies.",
+      "source": "ml/data/reports/churn/snapshot_metrics.csv",
+      "expected_range": "-inf to +inf",
+      "alert_threshold": {
+        "alert": 3.0
+      }
+    },
+    {
+      "name": "retention_rate",
+      "definition": "Cohort retention rate by month and period.",
+      "source": "ml/data/reports/causal/cohort_time_series/cohort_metrics.csv",
+      "expected_range": "0.0-1.0",
+      "alert_threshold": null
+    },
+    {
+      "name": "revenue_retention_rate",
+      "definition": "Cohort revenue retention relative to cohort month 0.",
+      "source": "ml/data/reports/causal/cohort_time_series/cohort_metrics.csv",
+      "expected_range": "0.0+",
+      "alert_threshold": null
+    }
+  ]
+}
