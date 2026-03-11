@@ -1,0 +1,6 @@
+user_id,variant,converted,revenue_30d,pre_revenue_30d
+u1,control,0,0.00,12.50
+u2,treatment,1,28.90,10.00
+u3,control,1,19.20,18.00
+u4,treatment,0,0.00,9.30
+

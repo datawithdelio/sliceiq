@@ -16,3 +16,5 @@ pytest-cov==4.1.0
 pyjwt[crypto]
 Faker
 redis
+joblib
+scikit-learn
