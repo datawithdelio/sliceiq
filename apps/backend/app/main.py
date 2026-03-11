@@ -7,9 +7,12 @@ import app.models  # noqa: F401
 from app.api.health import router as health_router
 from app.api.ml import router as ml_router
 from app.api.orders import router as orders_router
+from app.api.admin import router as admin_router
+from app.api.payments import router as payments_router
 from app.api.protected import router as protected_router
 from app.api.redis_ping import router as redis_ping_router
 from app.api.users import router as users_router
+from app.core.socket_manager import socket_app
 from app.routers.products import router as products_router
 
 app = FastAPI(title="SliceIQ API")
@@ -29,9 +32,13 @@ app.include_router(health_router)
 app.include_router(redis_ping_router)
 app.include_router(protected_router)
 app.include_router(orders_router)
+app.include_router(admin_router)
+app.include_router(payments_router)
 app.include_router(users_router)
 app.include_router(products_router)
 app.include_router(ml_router)
+
+app.mount("/ws", socket_app)
 
 
 if __name__ == "__main__":

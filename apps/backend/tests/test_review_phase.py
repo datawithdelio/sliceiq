@@ -232,7 +232,7 @@ async def test_orders_create_retry_not_idempotent(client: AsyncClient, db_sessio
 
     assert response_a.status_code == 200
     assert response_b.status_code == 200
-    assert response_a.json()["id"] != response_b.json()["id"]
+    assert response_a.json()["order"]["id"] != response_b.json()["order"]["id"]
 
 
 @pytest.mark.asyncio

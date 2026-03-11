@@ -2,6 +2,8 @@ import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { SocketProvider } from "./providers/SocketProvider";
+import { LiveStatus } from "./components/LiveStatus";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,7 +31,13 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          {children}
+          <SocketProvider>
+            <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
+              <div className="text-sm font-semibold">SliceIQ</div>
+              <LiveStatus />
+            </div>
+            {children}
+          </SocketProvider>
         </body>
       </html>
     </ClerkProvider>

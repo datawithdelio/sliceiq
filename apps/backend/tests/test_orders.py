@@ -54,8 +54,9 @@ async def test_create_order(client: AsyncClient, db_session, monkeypatch):
 
     assert response.status_code == 200
     data = response.json()
-    assert data["user_id"] == str(user.id)
-    assert data["status"] == "pending"
+    assert data["order"]["user_id"] == str(user.id)
+    assert data["order"]["status"] == "pending"
+    assert "checkout_url" in data
 
 
 @pytest.mark.asyncio
